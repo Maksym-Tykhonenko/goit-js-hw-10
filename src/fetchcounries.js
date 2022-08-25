@@ -9,8 +9,8 @@ export function fetchCountries(name) {
              }
          return  response.json()
     })
-       .then(country => {
-   console.log(country)
- })
+ //      .then(country => {
+ //  console.log(country)
+ //})
  } 
 
