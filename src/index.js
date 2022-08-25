@@ -27,37 +27,38 @@ const searchCounry = evt => {
                     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
                     return;
                 }
+                //если поиск по инпут выдаст от 2х до 10 стран зарендери их список
+                else if (country.length >= 2 || country.length <= 10) {
+                    renderCountryList(country);
+                }
                 //если поиск по инпут выдаст 1 страну зарендери её карточку
                 else if (country.length === 1) {
                     renderCountryInfo(country);
                 }
-                //если поиск по инпут выдаст от 2х до 10 стран зарендери их список
-                else if (country.length >= 2 && country.length <= 10) {
-                    renderCountryList(country);
-                }
-            }).catch(error => {
+            })
+            .catch(error => {
                 Notiflix.Notify.warning('Oops, there is no country with that name');
                 return error;
             });
     }
 };
 
-const renderCountryInfo = country => {
-    
-};
+;
 
 const renderCountryList = country => {
-
-    //потом рендерим форму
-    const countryListMarkup = country.map(({ flags, name }) => { 
-        return `<ul><li><img src='${flags}' alt=''><p>${name}</p></li>`
-    }).join('');
     //сначала чистим форму 
     refs.countryList.innerHTML = '';
+    //потом рендерим форму
+    const countryListMarkup = country.map(({ flags, name }) => { 
+        return `<li><img src='${flags}' alt=''><p>${name}</p></li>`
+    }).join('');
+
     //вставляем нашу разметку
     refs.countryList.insertAdjacentElement('afterbegin', countryListMarkup)
 };
-
+const renderCountryInfo = country => {
+    
+}
 refs.input.addEventListener('input', debounce(searchCounry, DEBOUNCE_DELAY));
 
 
