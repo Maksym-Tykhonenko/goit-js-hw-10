@@ -29,7 +29,7 @@ const searchCounry = evt => {
                     return;
                 }
                 //если поиск по инпут выдаст от 2х до 10 стран зарендери их список
-                else if (country.length >= 2 || country.length <= 10) {
+                else if (country.length >= 2 && country.length <= 10) {
                     renderCountryList(country);
                 }
                 //если поиск по инпут выдаст 1 страну зарендери её карточку
@@ -47,9 +47,10 @@ const searchCounry = evt => {
 const renderCountryList = country => {
     //сначала чистим форму 
     refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
     //потом рендерим форму
     const countryListMarkup = country.map(({ flags, name }) => { 
-        return `<li class="list-country"><p><img  src='${flags.svg}' alt='${name.common}' class="flag-list"';'>${name.common}</p></li>`
+        return `<li class="list-country"><p><img  src='${flags.svg}' alt='${name.common}' class="list-flag">${name.common}</p></li>`
     }).join('');
     //вставляем нашу разметку
     refs.countryList.insertAdjacentHTML('afterbegin', countryListMarkup)
@@ -57,12 +58,16 @@ const renderCountryList = country => {
 const renderCountryInfo = country => {
     //сначала чистим форму 
     refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
     //рендерим форму для 1 страны
-    const countryListMarkup = country.map(({ name, capital, population, flags, languages }) => {
-        return ``
+    const countryInfoMarkup = country.map(({ name, capital, population, flags, languages }) => {
+        return `<p class="info-country"><img  src='${flags.svg}' alt='${name.common}' class="info-flag">${name.common}</p>
+        <p>Capital: ${capital}</p>
+        <p>Population: ${population}</p>
+        <p>Language: ${Object.values(languages)}</p> `
     }).join('');
     //вставляем разметку на страницу
-    refs.countryInfot.insertAdjacentHTML('afterbegin', countryListMarkup)
+    refs.countryInfo.insertAdjacentHTML('afterbegin', countryInfoMarkup)
 };
 
 refs.input.addEventListener('input', debounce(searchCounry, DEBOUNCE_DELAY));

@@ -21,7 +21,15 @@ body {
 .list-country {
   list-style: none;
 }
-.flag-list {
+.list-flag {
   width: 30px;
   margin-right: 10px;
 }
+ .info-country {
+  font-size: 40px;
+  font-weight: 700;
+ }
+ .info-flag {
+  width: 50px;
+  margin-right: 10px;
+ }
