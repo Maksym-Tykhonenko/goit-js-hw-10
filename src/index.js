@@ -24,7 +24,10 @@ const searchCounry = evt => {
                 if (country.length > 10) {
                     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.',
                     {
-                    width: '360px'},);
+                            width: '360px'
+                        });
+                        //фунция для очистки инфы что мы зарендерели
+                        cliarRender();
                     return;
                 }
                 //если поиск по инпут выдаст от 2х до 10 стран зарендери их список
@@ -40,15 +43,16 @@ const searchCounry = evt => {
                     Notiflix.Notify.warning('Oops, there is no country with that name',
                      {
                     width: '360px'},);
+                        //фунция для очистки инфы что мы зарендерели
+                        cliarRender();
                     return error;
                 });
     }
 };
 
 const renderCountryList = country => {
-    //сначала чистим форму 
-    refs.countryList.innerHTML = '';
-    refs.countryInfo.innerHTML = '';
+    //фунция для очистки инфы что мы зарендерели
+    cliarRender();
     //потом рендерим форму
     const countryListMarkup = country.map(({ flags, name }) => { 
         return `<li class="list-country"><p><img  src='${flags.svg}'
@@ -58,9 +62,8 @@ const renderCountryList = country => {
     refs.countryList.insertAdjacentHTML('afterbegin', countryListMarkup)
 };
 const renderCountryInfo = country => {
-    //сначала чистим форму 
-    refs.countryList.innerHTML = '';
-    refs.countryInfo.innerHTML = '';
+    //фунция для очистки инфы что мы зарендерели
+    cliarRender();
     //рендерим форму для 1 страны
     const countryInfoMarkup = country.map(({ name, capital, population, flags, languages }) => {
         return `<p class="info-country"><img  src='${flags.svg}' alt='${name.common}' class="info-flag">${name.common}</p>
@@ -71,6 +74,12 @@ const renderCountryInfo = country => {
     //вставляем разметку на страницу
     refs.countryInfo.insertAdjacentHTML('afterbegin', countryInfoMarkup)
 };
+//пишем фукцию для очистки инфы что мы зарендерели
+function cliarRender() {
+    refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
+}
+
 //вешаем слушателя на инпут
 refs.input.addEventListener('input', debounce(searchCounry, DEBOUNCE_DELAY));
 
